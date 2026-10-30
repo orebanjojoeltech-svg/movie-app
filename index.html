@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07070a">
+<meta name="description" content="David — discover family-friendly cartoons and anime. Watch trailers right inside the app.">
+<title>David - Cartoons & Anime for Kids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://i.ytimg.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell" id="appShell">
+
+  <!-- Top bar -->
+  <header class="topbar" id="topbar">
+    <a class="brand" href="#/" id="brandHome" aria-label="David home"><span class="brand-mark">D</span><span class="brand-name">DAVID</span></a>
+    <nav class="top-links" aria-label="Quick links">
+      <a href="#/" data-top="home">Home</a>
+      <a href="#/browse/Movies" data-top="movies">Movies</a>
+      <a href="#/browse/Anime" data-top="series">Anime</a>
+      <a href="#/clips" data-top="clips">Trailers</a>
+      <a href="#/list" data-top="list">My List</a>
+    </nav>
+    <button class="icon-button" id="searchToggle" aria-label="Search (press /)"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></button>
+  </header>
+
+  <!-- HOME -->
+  <main id="homeView" class="view">
+    <section class="hero" id="hero" aria-roledescription="carousel" aria-label="Featured titles">
+      <div class="hero-slides" id="heroSlides"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-content" id="heroContent"></div>
+      <div class="hero-dots" id="heroDots" role="tablist" aria-label="Choose featured title"></div>
+    </section>
+
+    <div class="chips-wrap">
+      <div class="chips" id="chips" role="tablist" aria-label="Browse by genre"></div>
+    </div>
+
+    <div class="content" id="shelves"></div>
+  </main>
+
+  <!-- BROWSE / MY LIST / DOWNLOADS / TRAILERS -->
+  <main id="browseView" class="view hidden">
+    <div class="browse-head">
+      <div>
+        <p class="eyebrow" id="browseKicker">BROWSE</p>
+        <h1 id="browseTitle">All titles</h1>
+        <p class="browse-sub" id="browseSub"></p>
+      </div>
+    </div>
+    <div class="chips-wrap"><div class="chips" id="browseChips"></div></div>
+    <div class="content"><div class="grid" id="browseGrid"></div></div>
+  </main>
+
+  <!-- DETAILS -->
+  <main id="detailsView" class="view details-view hidden">
+    <div class="detail-backdrop" id="detailBackdropWrap">
+      <div class="detail-art" id="detailArt"></div>
+      <div class="backdrop-shade"></div>
+      <button class="round-button back-button" id="backHome" aria-label="Back">‹</button>
+      <button class="round-button more-button" id="shareButton" aria-label="Share">
+        <svg viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>
+      </button>
+      <button class="big-play" id="bigPlay" aria-label="Play trailer"><span>▶</span></button>
+      <span class="preview-label">Trailer preview</span>
+    </div>
+    <div class="detail-content">
+      <div class="detail-title-row">
+        <div>
+          <h1 id="detailTitle">Title</h1>
+          <p class="metadata" id="detailMeta"></p>
+          <div class="genre-tags" id="detailGenres"></div>
+        </div>
+        <div class="detail-actions">
+          <button class="large-icon" id="listButton" aria-label="Add to my list" title="My List">＋</button>
+          <button class="large-icon" id="downloadButton" aria-label="Save to downloads" title="Downloads">
+            <svg viewBox="0 0 32 24" class="detail-cloud"><path d="M8.5 20A6.5 6.5 0 0 1 7.8 7a9.1 9.1 0 0 1 17.1 2.1A5.5 5.5 0 0 1 24.5 20Z" fill="currentColor"/><path d="M16 8v9m-4-4 4 4 4-4" fill="none" stroke="#08080b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="liked"><span>🔥</span> <b id="detailBadge">Popular right now</b></div>
+      <button class="play-wide" id="detailPlay">▶ <span>Play Trailer</span></button>
+      <h2>Prolog</h2>
+      <p class="synopsis" id="detailSynopsis"></p>
+      <p class="credit-line" id="detailCredit"></p>
+      <h2 class="cast-heading">Top Cast</h2>
+      <div class="cast-row" id="castRow"></div>
+      <h2 class="cast-heading">More Like This</h2>
+      <div class="poster-row" id="similarRow"></div>
+    </div>
+  </main>
+
+  <!-- Floating bottom nav -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <button class="nav-item active" data-nav="home" aria-label="Home"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></button>
+    <button class="nav-item" data-nav="list" aria-label="My List"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.4-9.3C1.3 8.4 3 5 6.3 5c2 0 3.4 1 4.2 2.4h3C14.3 6 15.7 5 17.7 5 21 5 22.7 8.4 21.4 11.700 19.500 16.400 12 21 12 21Z"/></svg><span>My List</span></button>
+    <button class="nav-item" data-nav="downloads" aria-label="Downloads"><svg viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 20h16"/></svg><span>Saved</span></button>
+    <button class="nav-item" data-nav="clips" aria-label="Trailers"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9.500 5 2.500-5 2.500z"/></svg><span>Trailers</span></button>
+  </nav>
+</div>
+
+<!-- Search -->
+<div class="modal hidden" id="searchModal" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="modal-panel">
+    <div class="search-line">
+      <svg viewBox="0 0 24 24" class="search-icon"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+      <input id="searchInput" type="search" placeholder="Search titles, actors or genres…" aria-label="Search titles, actors or genres" autocomplete="off">
+      <button id="closeSearch" aria-label="Close search">✕</button>
+    </div>
+    <div id="searchResults"></div>
+  </div>
+</div>
+
+<!-- Trailer player (plays inside the site) -->
+<div class="trailer-modal hidden" id="trailerModal" role="dialog" aria-modal="true" aria-labelledby="trailerHeading">
+  <div class="trailer-panel">
+    <div class="trailer-header">
+      <div><p class="trailer-kicker">DAVID PREVIEW</p><h2 id="trailerHeading">Movie Trailer</h2><p class="trailer-meta" id="trailerMeta"></p></div>
+      <button id="closeTrailer" class="trailer-close" aria-label="Close trailer">✕</button>
+    </div>
+    <div class="trailer-frame-wrap" id="trailerFrameWrap"><div id="ytPlayer"></div></div>
+    <div class="trailer-error hidden" id="trailerError" role="alert">
+      <p id="trailerErrorText"></p>
+      <a id="youtubeFallback" href="#" target="_blank" rel="noopener noreferrer">Open this trailer on YouTube ↗</a>
+    </div>
+    <div class="trailer-actions">
+      <button class="outline-button small" id="trailerDetails">Details</button>
+      <button class="outline-button small" id="trailerList">＋ My List</button>
+    </div>
+    <p class="upnext-label">Up next</p>
+    <div class="upnext" id="upNext"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
